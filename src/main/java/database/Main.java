@@ -360,8 +360,10 @@ public class Main extends javax.swing.JFrame {
             }
         } catch(NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "Yang anda input bukan merupakan nilai numerik, silahkan coba lagi", "Kesalahan Format Input", 1);
+            return;
         } catch(InvalidDateFormat ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Kesalahan Format Tanggal", 1);
+            return;
         }
 
         try {
@@ -380,12 +382,11 @@ public class Main extends javax.swing.JFrame {
         this.barang.setKode(Integer.parseInt(String.valueOf(tabelBarang.getValueAt(tabelBarang.getSelectedRow(), 0))));
         try {
             this.barang.deleteBarang();
+            this.queryBarang();
+            buttonHapus.setEnabled(false);
         } catch(SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
-
-        this.queryBarang();
-        buttonHapus.setEnabled(false);
     }//GEN-LAST:event_buttonHapusActionPerformed
 
     private void tabelBarangFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tabelBarangFocusGained

@@ -4,17 +4,19 @@
  * and open the template in the editor.
  */
 package database;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Calvin C M
  */
 public class Main extends javax.swing.JFrame {
-
+    Barang barang;
     /**
      * Creates new form Main
      */
     public Main() {
+        this.barang=new Barang();
         initComponents();
     }
 
@@ -27,21 +29,289 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        header = new javax.swing.JPanel();
+        judul = new javax.swing.JLabel();
+        formBox = new javax.swing.JPanel();
+        labelKodeBarang = new javax.swing.JLabel();
+        inputKodeBarang = new javax.swing.JTextField();
+        labelNamaBarang = new javax.swing.JLabel();
+        inputNamaBarang = new javax.swing.JTextField();
+        labelHarga = new javax.swing.JLabel();
+        labelRp = new javax.swing.JLabel();
+        inputHarga = new javax.swing.JTextField();
+        labelStok = new javax.swing.JLabel();
+        inputStok = new javax.swing.JTextField();
+        labelTglExpired = new javax.swing.JLabel();
+        inputTanggalExpire = new javax.swing.JTextField();
+        options = new javax.swing.JPanel();
+        buttonTambah = new javax.swing.JButton();
+        buttonHapus = new javax.swing.JButton();
+        buttonUpdate = new javax.swing.JButton();
+        buttonSimpan = new javax.swing.JButton();
+        tableBox = new javax.swing.JScrollPane();
+        tabelBarang = new javax.swing.JTable();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        header.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        judul.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        judul.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        judul.setText("Manajemen Toko");
+
+        javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
+        header.setLayout(headerLayout);
+        headerLayout.setHorizontalGroup(
+            headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(headerLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(judul, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        headerLayout.setVerticalGroup(
+            headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(headerLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(judul, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        formBox.setBorder(javax.swing.BorderFactory.createTitledBorder("Form"));
+
+        labelKodeBarang.setText("Kode Barang");
+
+        labelNamaBarang.setText("Nama Barang");
+
+        labelHarga.setText("Harga Barang");
+
+        labelRp.setText("Rp");
+
+        labelStok.setText("Stok Barang");
+
+        inputStok.setText("0");
+
+        labelTglExpired.setText("Tanggal Expired");
+
+        inputTanggalExpire.setText("dd-mm-yyyy");
+
+        options.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        buttonTambah.setText("Tambah");
+        buttonTambah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonTambahActionPerformed(evt);
+            }
+        });
+
+        buttonHapus.setText("Hapus");
+        buttonHapus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonHapusActionPerformed(evt);
+            }
+        });
+
+        buttonUpdate.setText("Update");
+        buttonUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonUpdateActionPerformed(evt);
+            }
+        });
+
+        buttonSimpan.setText("Simpan");
+        buttonSimpan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonSimpanActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout optionsLayout = new javax.swing.GroupLayout(options);
+        options.setLayout(optionsLayout);
+        optionsLayout.setHorizontalGroup(
+            optionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(optionsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(buttonTambah)
+                .addGap(0, 187, Short.MAX_VALUE)
+                .addComponent(buttonUpdate)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(buttonSimpan)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 187, Short.MAX_VALUE)
+                .addComponent(buttonHapus)
+                .addContainerGap())
+        );
+        optionsLayout.setVerticalGroup(
+            optionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, optionsLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(optionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(buttonTambah)
+                    .addComponent(buttonHapus)
+                    .addComponent(buttonUpdate)
+                    .addComponent(buttonSimpan))
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout formBoxLayout = new javax.swing.GroupLayout(formBox);
+        formBox.setLayout(formBoxLayout);
+        formBoxLayout.setHorizontalGroup(
+            formBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(formBoxLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(formBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(formBoxLayout.createSequentialGroup()
+                        .addComponent(options, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(formBoxLayout.createSequentialGroup()
+                        .addGroup(formBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(labelStok, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(labelHarga, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(labelNamaBarang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(labelKodeBarang, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                            .addComponent(labelTglExpired, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(formBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(formBoxLayout.createSequentialGroup()
+                                .addComponent(labelRp)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(inputHarga, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(formBoxLayout.createSequentialGroup()
+                                .addGroup(formBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(inputKodeBarang)
+                                    .addComponent(inputNamaBarang)
+                                    .addGroup(formBoxLayout.createSequentialGroup()
+                                        .addGroup(formBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(inputTanggalExpire, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(inputStok, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addContainerGap())))))
+        );
+        formBoxLayout.setVerticalGroup(
+            formBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(formBoxLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(formBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(inputKodeBarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelKodeBarang))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(formBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelNamaBarang)
+                    .addComponent(inputNamaBarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(formBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelHarga)
+                    .addGroup(formBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(inputHarga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(labelRp)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(formBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelStok)
+                    .addComponent(inputStok))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(formBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelTglExpired)
+                    .addComponent(inputTanggalExpire, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addComponent(options, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        tabelBarang.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tableBox.setViewportView(tabelBarang);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(header, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(formBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tableBox))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(formBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(tableBox, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void buttonTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTambahActionPerformed
+        this.barang.setKode(Integer.parseInt(inputKodeBarang.getText()));
+        this.barang.setNama(inputNamaBarang.getText());
+        try {
+            this.barang.setHarga(Double.parseDouble(inputHarga.getText()));
+            this.barang.setStok(Integer.parseInt(inputStok.getText()));
+
+            String[] tanggal=inputTanggalExpire.getText().split("-");
+            int hari=Integer.parseInt(tanggal[0]);
+            int bulan=Integer.parseInt(tanggal[1]);
+            int tahun=Integer.parseInt(tanggal[2]);
+
+            if(invalidDate(hari,bulan,tahun)) {
+                throw new InvalidDateFormat();
+            } else {
+                this.barang.getExpired().setDay(hari);
+                this.barang.getExpired().setMonth(bulan);
+                this.barang.getExpired().setYear(tahun);
+            }
+
+            System.out.println(this.barang.getKode());
+            System.out.println(this.barang.getNama());
+            System.out.println(this.barang.getHarga());
+            System.out.println(this.barang.getStok());
+            System.out.println(this.barang.getExpired());
+
+        } catch(NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Yang anda input bukan merupakan nilai numerik, silahkan coba lagi", "Kesalahan Format Input", 1);
+        } catch(InvalidDateFormat ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Kesalahan Format Tanggal", 1);
+        }
+
+    }//GEN-LAST:event_buttonTambahActionPerformed
+
+    private void buttonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUpdateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonUpdateActionPerformed
+
+    private void buttonSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSimpanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonSimpanActionPerformed
+
+    private void buttonHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHapusActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonHapusActionPerformed
+
+    public boolean invalidDate(int d, int m, int y) {
+        return (
+            (d > 30 || d < 0)
+            ||
+            (m > 12 || m < 0)
+            ||
+            (y < 0)
+        );
+        // return true;
+    }
 
     /**
      * @param args the command line arguments
@@ -79,5 +349,26 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buttonHapus;
+    private javax.swing.JButton buttonSimpan;
+    private javax.swing.JButton buttonTambah;
+    private javax.swing.JButton buttonUpdate;
+    private javax.swing.JPanel formBox;
+    private javax.swing.JPanel header;
+    private javax.swing.JTextField inputHarga;
+    private javax.swing.JTextField inputKodeBarang;
+    private javax.swing.JTextField inputNamaBarang;
+    private javax.swing.JTextField inputStok;
+    private javax.swing.JTextField inputTanggalExpire;
+    private javax.swing.JLabel judul;
+    private javax.swing.JLabel labelHarga;
+    private javax.swing.JLabel labelKodeBarang;
+    private javax.swing.JLabel labelNamaBarang;
+    private javax.swing.JLabel labelRp;
+    private javax.swing.JLabel labelStok;
+    private javax.swing.JLabel labelTglExpired;
+    private javax.swing.JPanel options;
+    private javax.swing.JTable tabelBarang;
+    private javax.swing.JScrollPane tableBox;
     // End of variables declaration//GEN-END:variables
 }

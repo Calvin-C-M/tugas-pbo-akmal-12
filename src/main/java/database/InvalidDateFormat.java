@@ -9,6 +9,8 @@ package database;
  *
  * @author Calvin C M
  */
-public class Database {
-    
+public class InvalidDateFormat extends Exception {
+    public InvalidDateFormat() {
+        super("Ingat format tanggal dd-mm-yyyy");
+    }
 }

@@ -310,13 +310,7 @@ public class Main extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Kesalahan Format Tanggal", 1);
         }
 
-        // System.out.println(this.barang.getKode());
-        // System.out.println(this.barang.getNama());
-        // System.out.println(this.barang.getHarga());
-        // System.out.println(this.barang.getStok());
-        // System.out.println(this.barang.getExpired());
-
-        this.insertBarang();
+        this.barang.insertBarang();
 
     }//GEN-LAST:event_buttonTambahActionPerformed
 
@@ -351,7 +345,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_tabelBarangFocusLost
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        // queryBarang();
+        queryBarang();
     }//GEN-LAST:event_formWindowOpened
 
     public boolean invalidDate(int d, int m, int y) {
@@ -374,10 +368,10 @@ public class Main extends javax.swing.JFrame {
             rs=connectDB.getData(query);
 
             while(rs.next()) {
-                tabelBarang.setValueAt(rs.getString("kode"), baris, 0);
+                tabelBarang.setValueAt(rs.getInt("kode"), baris, 0);
                 tabelBarang.setValueAt(rs.getString("nama"), baris, 1);
-                tabelBarang.setValueAt(rs.getString("harga"), baris, 2);
-                tabelBarang.setValueAt(rs.getString("stok"), baris, 3);
+                tabelBarang.setValueAt(rs.getDouble("harga"), baris, 2);
+                tabelBarang.setValueAt(rs.getInt("stok"), baris, 3);
                 tabelBarang.setValueAt(rs.getString("tgl_expire"), baris, 4);
 
                 baris++;
@@ -386,32 +380,6 @@ public class Main extends javax.swing.JFrame {
         } catch(Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
-    }
-
-    public void insertBarang() {
-        ConnectDB connectDB=new ConnectDB();
-        String query="INSERT INTO barang VALUES ('"+ this.barang.getKode() +
-                    "', '" + this.barang.getNama() +
-                    "', '" + this.barang.getHarga() +
-                    "', '" + this.barang.getStok() +
-                    "', '" + this.barang.getExpired() +
-                    ");";
-
-        connectDB.query(query);
-    }
-
-    public void updateBarang() {
-        ConnectDB connectDB=new ConnectDB();
-        String query="";
-
-        connectDB.query(query);
-    }
-
-    public void deleteBarang() {
-        ConnectDB connectDB=new ConnectDB();
-        String query="";
-
-        connectDB.query(query);
     }
 
     /**

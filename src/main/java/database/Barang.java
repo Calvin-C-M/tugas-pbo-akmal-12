@@ -75,20 +75,28 @@ public class Barang {
     public void insertBarang() {
         ConnectDB connectDB=new ConnectDB();
         String query="INSERT INTO barang VALUES ('"+ this.kode +
-                    "', '" + this.nama +
-                    "', '" + this.harga +
-                    "', '" + this.stok +
-                    "', '" + this.expired +
-                    ");";
+                     "', '" + this.nama +
+                     "', '" + this.harga +
+                     "', '" + this.stok +
+                     "', '" + this.expired +
+                     ");";
 
         connectDB.query(query);
     }
 
     public void updateBarang() {
-
+        ConnectDB connectDB=new ConnectDB();
+        String query="UPDATE barang SET nama='" + this.nama + 
+                     "', harga=" + this.harga + 
+                     ", stok=" + this.stok +
+                     ", tgl_expire='" + this.expired.toString() + 
+                     ";";
+        connectDB.query(query);
     }
 
     public void deleteBarang() {
-
+        ConnectDB connectDB=new ConnectDB();
+        String query="DELETE FROM barang WHERE kode='"+this.kode+"';";
+        connectDB.query(query);
     }
 }

@@ -71,4 +71,24 @@ public class Barang {
     public Date getExpired() {
         return expired;
     }
+
+    public void insertBarang() {
+        ConnectDB connectDB=new ConnectDB();
+        String query="INSERT INTO barang VALUES ('"+ this.kode +
+                    "', '" + this.nama +
+                    "', '" + this.harga +
+                    "', '" + this.stok +
+                    "', '" + this.expired +
+                    ");";
+
+        connectDB.query(query);
+    }
+
+    public void updateBarang() {
+
+    }
+
+    public void deleteBarang() {
+
+    }
 }

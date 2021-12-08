@@ -4,6 +4,11 @@
  * and open the template in the editor.
  */
 package database;
+import java.beans.Statement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javax.swing.JOptionPane;
 
 /**
@@ -52,6 +57,11 @@ public class Main extends javax.swing.JFrame {
         tabelBarang = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         header.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -104,6 +114,7 @@ public class Main extends javax.swing.JFrame {
         });
 
         buttonHapus.setText("Hapus");
+        buttonHapus.setEnabled(false);
         buttonHapus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonHapusActionPerformed(evt);
@@ -220,15 +231,23 @@ public class Main extends javax.swing.JFrame {
 
         tabelBarang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Kode Barang", "Nama Barang", "Harga Barang", "Stok", "Tanggal Expired"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Integer.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         tabelBarang.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 tabelBarangFocusGained(evt);
@@ -285,27 +304,36 @@ public class Main extends javax.swing.JFrame {
                 this.barang.getExpired().setMonth(bulan);
                 this.barang.getExpired().setYear(tahun);
             }
-
-            System.out.println(this.barang.getKode());
-            System.out.println(this.barang.getNama());
-            System.out.println(this.barang.getHarga());
-            System.out.println(this.barang.getStok());
-            System.out.println(this.barang.getExpired());
-
         } catch(NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "Yang anda input bukan merupakan nilai numerik, silahkan coba lagi", "Kesalahan Format Input", 1);
         } catch(InvalidDateFormat ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Kesalahan Format Tanggal", 1);
         }
 
+        // System.out.println(this.barang.getKode());
+        // System.out.println(this.barang.getNama());
+        // System.out.println(this.barang.getHarga());
+        // System.out.println(this.barang.getStok());
+        // System.out.println(this.barang.getExpired());
+
+        this.insertBarang();
+
     }//GEN-LAST:event_buttonTambahActionPerformed
 
     private void buttonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUpdateActionPerformed
+        
+
+        buttonTambah.setEnabled(false);
         buttonSimpan.setEnabled(true);
+        buttonHapus.setEnabled(false);
     }//GEN-LAST:event_buttonUpdateActionPerformed
 
     private void buttonSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSimpanActionPerformed
 
+
+        buttonTambah.setEnabled(true);
+        buttonSimpan.setEnabled(false);
+        buttonHapus.setEnabled(true);
     }//GEN-LAST:event_buttonSimpanActionPerformed
 
     private void buttonHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHapusActionPerformed
@@ -313,12 +341,18 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonHapusActionPerformed
 
     private void tabelBarangFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tabelBarangFocusGained
+        buttonHapus.setEnabled(true);
         buttonUpdate.setEnabled(true);
     }//GEN-LAST:event_tabelBarangFocusGained
 
     private void tabelBarangFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tabelBarangFocusLost
+        buttonHapus.setEnabled(false);
         buttonUpdate.setEnabled(false);
     }//GEN-LAST:event_tabelBarangFocusLost
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // queryBarang();
+    }//GEN-LAST:event_formWindowOpened
 
     public boolean invalidDate(int d, int m, int y) {
         return (
@@ -328,7 +362,56 @@ public class Main extends javax.swing.JFrame {
             ||
             (y < 0)
         );
-        // return true;
+    }
+
+    public void queryBarang() {
+        int baris=0;
+        try {
+            ConnectDB connectDB=new ConnectDB();
+            ResultSet rs=null;
+
+            String query="SELECT * FROM barang";
+            rs=connectDB.getData(query);
+
+            while(rs.next()) {
+                tabelBarang.setValueAt(rs.getString("kode"), baris, 0);
+                tabelBarang.setValueAt(rs.getString("nama"), baris, 1);
+                tabelBarang.setValueAt(rs.getString("harga"), baris, 2);
+                tabelBarang.setValueAt(rs.getString("stok"), baris, 3);
+                tabelBarang.setValueAt(rs.getString("tgl_expire"), baris, 4);
+
+                baris++;
+            }
+            rs.close();
+        } catch(Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }
+
+    public void insertBarang() {
+        ConnectDB connectDB=new ConnectDB();
+        String query="INSERT INTO barang VALUES ('"+ this.barang.getKode() +
+                    "', '" + this.barang.getNama() +
+                    "', '" + this.barang.getHarga() +
+                    "', '" + this.barang.getStok() +
+                    "', '" + this.barang.getExpired() +
+                    ");";
+
+        connectDB.query(query);
+    }
+
+    public void updateBarang() {
+        ConnectDB connectDB=new ConnectDB();
+        String query="";
+
+        connectDB.query(query);
+    }
+
+    public void deleteBarang() {
+        ConnectDB connectDB=new ConnectDB();
+        String query="";
+
+        connectDB.query(query);
     }
 
     /**

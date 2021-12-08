@@ -5,6 +5,8 @@
  */
 package database;
 
+import java.sql.SQLException;
+
 /**
  *
  * @author Calvin C M
@@ -72,29 +74,31 @@ public class Barang {
         return expired;
     }
 
-    public void insertBarang() {
+    public void insertBarang() throws SQLException {
         ConnectDB connectDB=new ConnectDB();
         String query="INSERT INTO barang VALUES ('"+ this.kode +
                      "', '" + this.nama +
                      "', '" + this.harga +
                      "', '" + this.stok +
                      "', '" + this.expired +
-                     ");";
+                     "');";
 
         connectDB.query(query);
     }
 
-    public void updateBarang() {
+    public void updateBarang() throws SQLException {
         ConnectDB connectDB=new ConnectDB();
         String query="UPDATE barang SET nama='" + this.nama + 
                      "', harga=" + this.harga + 
                      ", stok=" + this.stok +
                      ", tgl_expire='" + this.expired.toString() + 
-                     ";";
+                     "' " +
+                     "WHERE kode='" + this.kode +
+                     "';";
         connectDB.query(query);
     }
 
-    public void deleteBarang() {
+    public void deleteBarang() throws SQLException {
         ConnectDB connectDB=new ConnectDB();
         String query="DELETE FROM barang WHERE kode='"+this.kode+"';";
         connectDB.query(query);

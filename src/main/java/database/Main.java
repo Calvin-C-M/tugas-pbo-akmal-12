@@ -57,6 +57,7 @@ public class Main extends javax.swing.JFrame {
         tabelBarang = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Manajemen Toko");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -252,9 +253,6 @@ public class Main extends javax.swing.JFrame {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 tabelBarangFocusGained(evt);
             }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                tabelBarangFocusLost(evt);
-            }
         });
         tableBox.setViewportView(tabelBarang);
 
@@ -310,12 +308,31 @@ public class Main extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Kesalahan Format Tanggal", 1);
         }
 
-        this.barang.insertBarang();
+        try {
+            this.barang.insertBarang();
+            this.queryBarang();
+        } catch(SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
 
     }//GEN-LAST:event_buttonTambahActionPerformed
 
     private void buttonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUpdateActionPerformed
-        
+        inputKodeBarang.setEnabled(false);
+        this.barang.setKode(Integer.parseInt(String.valueOf(tabelBarang.getValueAt(tabelBarang.getSelectedRow(), 0))));
+        this.barang.setNama(String.valueOf(tabelBarang.getValueAt(tabelBarang.getSelectedRow(), 1)));
+        this.barang.setHarga(Double.parseDouble(String.valueOf(tabelBarang.getValueAt(tabelBarang.getSelectedRow(), 2))));
+        this.barang.setStok(Integer.parseInt(String.valueOf(tabelBarang.getValueAt(tabelBarang.getSelectedRow(), 3))));
+        String [] tanggal=String.valueOf(tabelBarang.getValueAt(tabelBarang.getSelectedRow(), 4)).split("-");
+        this.barang.getExpired().setDay(Integer.parseInt(tanggal[0]));
+        this.barang.getExpired().setMonth(Integer.parseInt(tanggal[1]));
+        this.barang.getExpired().setYear(Integer.parseInt(tanggal[2]));
+
+        inputKodeBarang.setText(String.valueOf(this.barang.getKode()));
+        inputNamaBarang.setText(this.barang.getNama());
+        inputHarga.setText(String.valueOf(this.barang.getHarga()));
+        inputStok.setText(String.valueOf(this.barang.getStok()));
+        inputTanggalExpire.setText(this.barang.getExpired().toString());
 
         buttonTambah.setEnabled(false);
         buttonSimpan.setEnabled(true);
@@ -323,26 +340,58 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonUpdateActionPerformed
 
     private void buttonSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSimpanActionPerformed
+        this.barang.setKode(Integer.parseInt(inputKodeBarang.getText()));
+        this.barang.setNama(inputNamaBarang.getText());
+        try {
+            this.barang.setHarga(Double.parseDouble(inputHarga.getText()));
+            this.barang.setStok(Integer.parseInt(inputStok.getText()));
 
+            String[] tanggal=inputTanggalExpire.getText().split("-");
+            int hari=Integer.parseInt(tanggal[0]);
+            int bulan=Integer.parseInt(tanggal[1]);
+            int tahun=Integer.parseInt(tanggal[2]);
 
-        buttonTambah.setEnabled(true);
-        buttonSimpan.setEnabled(false);
-        buttonHapus.setEnabled(true);
+            if(invalidDate(hari,bulan,tahun)) {
+                throw new InvalidDateFormat();
+            } else {
+                this.barang.getExpired().setDay(hari);
+                this.barang.getExpired().setMonth(bulan);
+                this.barang.getExpired().setYear(tahun);
+            }
+        } catch(NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Yang anda input bukan merupakan nilai numerik, silahkan coba lagi", "Kesalahan Format Input", 1);
+        } catch(InvalidDateFormat ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Kesalahan Format Tanggal", 1);
+        }
+
+        try {
+            this.barang.updateBarang();
+            this.queryBarang();
+            buttonTambah.setEnabled(true);
+            buttonSimpan.setEnabled(false);
+            buttonHapus.setEnabled(true);
+        } catch(SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+
     }//GEN-LAST:event_buttonSimpanActionPerformed
 
     private void buttonHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHapusActionPerformed
+        this.barang.setKode(Integer.parseInt(String.valueOf(tabelBarang.getValueAt(tabelBarang.getSelectedRow(), 0))));
+        try {
+            this.barang.deleteBarang();
+        } catch(SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
 
+        this.queryBarang();
+        buttonHapus.setEnabled(false);
     }//GEN-LAST:event_buttonHapusActionPerformed
 
     private void tabelBarangFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tabelBarangFocusGained
         buttonHapus.setEnabled(true);
         buttonUpdate.setEnabled(true);
     }//GEN-LAST:event_tabelBarangFocusGained
-
-    private void tabelBarangFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tabelBarangFocusLost
-        buttonHapus.setEnabled(false);
-        buttonUpdate.setEnabled(false);
-    }//GEN-LAST:event_tabelBarangFocusLost
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         queryBarang();

@@ -111,6 +111,7 @@ public class Main extends javax.swing.JFrame {
         });
 
         buttonUpdate.setText("Update");
+        buttonUpdate.setEnabled(false);
         buttonUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonUpdateActionPerformed(evt);
@@ -118,6 +119,7 @@ public class Main extends javax.swing.JFrame {
         });
 
         buttonSimpan.setText("Simpan");
+        buttonSimpan.setEnabled(false);
         buttonSimpan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonSimpanActionPerformed(evt);
@@ -227,6 +229,14 @@ public class Main extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tabelBarang.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tabelBarangFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tabelBarangFocusLost(evt);
+            }
+        });
         tableBox.setViewportView(tabelBarang);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -291,16 +301,24 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonTambahActionPerformed
 
     private void buttonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUpdateActionPerformed
-        // TODO add your handling code here:
+        buttonSimpan.setEnabled(true);
     }//GEN-LAST:event_buttonUpdateActionPerformed
 
     private void buttonSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSimpanActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_buttonSimpanActionPerformed
 
     private void buttonHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHapusActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_buttonHapusActionPerformed
+
+    private void tabelBarangFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tabelBarangFocusGained
+        buttonUpdate.setEnabled(true);
+    }//GEN-LAST:event_tabelBarangFocusGained
+
+    private void tabelBarangFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tabelBarangFocusLost
+        buttonUpdate.setEnabled(false);
+    }//GEN-LAST:event_tabelBarangFocusLost
 
     public boolean invalidDate(int d, int m, int y) {
         return (

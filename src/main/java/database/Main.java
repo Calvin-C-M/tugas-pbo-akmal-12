@@ -383,10 +383,11 @@ public class Main extends javax.swing.JFrame {
         try {
             this.barang.deleteBarang();
             this.queryBarang();
-            buttonHapus.setEnabled(false);
         } catch(SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
+            return;
         }
+        buttonHapus.setEnabled(false);
     }//GEN-LAST:event_buttonHapusActionPerformed
 
     private void tabelBarangFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tabelBarangFocusGained
